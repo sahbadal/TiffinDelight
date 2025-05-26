@@ -96,7 +96,7 @@ const Navbar = () => {
                     {user &&
                         <NavLink to={'/meals'} onClick={() => setOpen(false)}>My Orders</NavLink>
                     }
-                    <NavLink to={'/'} onClick={() => setOpen(false)}>Contact</NavLink>
+                    <NavLink to={'/subscribe'} onClick={() => setOpen(false)}>Subscription</NavLink>
                     {!user ? (
                         <button onClick={() => { setOpen(false); setShowUserLogin(true) }} className="cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-primary-dull transition text-white rounded-full text-sm">
                             Login
