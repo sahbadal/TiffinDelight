@@ -76,7 +76,7 @@ import veg_combo_image from "./veg_combo_meal.png";
 import non_veg_image from "./non_veg_meal.png";
 import healthy_diet_image from "./healthy_diet.png";
 import office_lunch_image from "./office_lunch.png";
-import weekend_special_image from "./Weekend_Special_Thali.png";
+import Weekend_Special_Thali from "./Weekend_Special_Thali.png";
 import tiffin_image from "./tiffin_image.png";
 export const assets = {
   logo,
@@ -108,7 +108,7 @@ export const assets = {
   box_icon,
   banner_bg_logo,
   tiffin_image,
-  weekend_special_image
+  Weekend_Special_Thali,
 };
 
 export const categories = [
@@ -151,7 +151,7 @@ export const categories = [
   {
     text: "Weekend Special Thali",
     path: "Weekend Special Thali",
-    image: weekend_special_image,
+    image: Weekend_Special_Thali,
     bgColor: "#F1E3F9",
   },
 ];
