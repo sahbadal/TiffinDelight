@@ -13,4 +13,5 @@ export const {
   STRIPE_SECRET_KEY,
   ADMIN_EMAIL,
   ADMIN_PASSWORD,
+  STRIPE_WEBHOOK_SECRET,
 } = process.env;

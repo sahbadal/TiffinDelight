@@ -113,6 +113,11 @@ export const loginUser = async (req, res) => {
 export const checkAuth = async (req, res) => {
   try {
     const user = await User.findById(req.userId).select("-password");
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
     return res.status(200).json({
       success: true,
       user,

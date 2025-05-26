@@ -19,7 +19,9 @@ const authUser = async (req, res, next) => {
         .json({ success: false, message: "Not Authorized" });
     }
   } catch (err) {
-    return res.status(400).json({ message: "Failed to decode token" });
+    return res
+      .status(401)
+      .json({ success: false, message: "Invalid or Expired Token" });
   }
 };
 

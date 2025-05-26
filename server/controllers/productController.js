@@ -17,7 +17,7 @@ export const addProduct = async (req, res) => {
       })
     );
 
-    Product.create({
+    await Product.create({
       ...productData,
       image: imageUrl,
     });
@@ -55,7 +55,7 @@ export const getAllProducts = async (req, res) => {
 //get product by id: /api/product/:id
 export const getProductById = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const product = await Product.findById(id);
     if (!product) {
       return res.status(404).json({

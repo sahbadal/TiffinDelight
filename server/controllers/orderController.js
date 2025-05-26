@@ -2,7 +2,10 @@ import Product from "../models/ProductModel.js";
 import Order from "../models/OrdersModel.js";
 import User from "../models/UserModel.js";
 import Stripe from "stripe";
-import { STRIPE_SECRET_KEY } from "../config/envConfig.js";
+import {
+  STRIPE_SECRET_KEY,
+  STRIPE_WEBHOOK_SECRET,
+} from "../config/envConfig.js";
 
 //place order cod: /api/order/cod
 export const placeOrderCod = async (req, res) => {
@@ -43,7 +46,8 @@ export const placeOrderCod = async (req, res) => {
 //place order cod: /api/order/stripe
 export const placeOrderStripe = async (req, res) => {
   try {
-    const { userId, items, address } = req.body;
+    const userId = req.userId;
+    const { items, address } = req.body;
     const { origin } = req.headers;
 
     if (!address || items.length === 0) {
