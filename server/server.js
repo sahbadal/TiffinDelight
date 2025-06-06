@@ -24,6 +24,7 @@ const allowOrigins = [
   "http://localhost:5173",
   "https://tiffin-delight-henna.vercel.app",
 ];
+app.use(cors({ origin: allowOrigins, credentials: true }));
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
@@ -31,7 +32,6 @@ app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ origin: allowOrigins, credentials: true }));
 
 app.get("/", (req, res) => {
   res.send("API is running");
