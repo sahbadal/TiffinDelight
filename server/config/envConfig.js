@@ -1,0 +1,17 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+export const {
+  PORT,
+  MONGODB_URI,
+  JWT_SECRET,
+  JWT_EXPIRES_IN,
+  NODE_ENV,
+  CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
+  STRIPE_SECRET_KEY,
+  ADMIN_EMAIL,
+  ADMIN_PASSWORD,
+  STRIPE_WEBHOOK_SECRET,
+} = process.env;
