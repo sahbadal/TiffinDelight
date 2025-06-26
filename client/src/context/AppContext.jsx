@@ -38,7 +38,9 @@ export const AppContextProvider = ({ children }) => {
             }
         } catch (error) {
             setIsProvider(false);
-            console.log(error);
+            if (error.response?.status !== 401) {
+                console.error("Provider fetch error:", error);
+            }
         }
     }
 
@@ -53,7 +55,9 @@ export const AppContextProvider = ({ children }) => {
             }
         } catch (error) {
             setIsAdmin(false);
-            console.log(error);
+            if (error.response?.status !== 401) {
+                console.error("Admin fetch error:", error);
+            }
         }
     }
 
@@ -67,6 +71,9 @@ export const AppContextProvider = ({ children }) => {
             }
         } catch (error) {
             setUser(null);
+            if (error.response?.status !== 401) {
+                console.error("User fetch error:", error);
+            }
         }
     }
 

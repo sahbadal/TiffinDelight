@@ -20,10 +20,7 @@ await connectDB();
 // Cloudinary connection
 await connectCloudinary();
 
-const allowOrigins = [
-  "http://localhost:5173",
-  "https://tiffin-delight-henna.vercel.app",
-];
+const allowOrigins = ["http://localhost:3001"];
 app.use(cors({ origin: allowOrigins, credentials: true }));
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
