@@ -1,0 +1,15 @@
+name: Deploy Only Backend to Render
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "server/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Render
+        run: curl -X POST https://api.render.com/deploy/srv-d1epr63e5dus739r08e0?key=LoNxDGqUlhU
