@@ -20,10 +20,7 @@ await connectDB();
 // Cloudinary connection
 await connectCloudinary();
 
-const allowOrigins = [
-  "http://localhost:3001",
-  "https://sahbadal.github.io/TiffinDelight",
-];
+const allowOrigins = ["http://localhost:3001", "https://sahbadal.github.io"];
 app.use(cors({ origin: allowOrigins, credentials: true }));
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
