@@ -7,7 +7,7 @@ import axios from 'axios';
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.withCredentials = true;
 
-console.log("BASE URL:", axios.defaults.baseURL);
+console.log("BASE URL:", import.meta.env.VITE_BACKEND_URL);
 
 const AppContext = createContext();
 
