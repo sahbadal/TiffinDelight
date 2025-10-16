@@ -18,6 +18,7 @@ const AdminLogin = () => {
                 password
             });
             if (data.success) {
+                localStorage.setItem('adminToken', data.adminToken)
                 setIsAdmin(true);
                 navigate('/admin');
             } else {

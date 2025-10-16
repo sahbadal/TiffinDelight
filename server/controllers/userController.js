@@ -1,7 +1,7 @@
 import User from "../models/UserModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET, JWT_EXPIRES_IN, NODE_ENV } from "../config/envConfig.js";
+import { JWT_SECRET, JWT_EXPIRES_IN } from "../config/envConfig.js";
 
 // Register user : /api/user/register
 export const registerUser = async (req, res) => {
@@ -39,21 +39,11 @@ export const registerUser = async (req, res) => {
       expiresIn: JWT_EXPIRES_IN,
     });
 
-    // Set cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: NODE_ENV === "production",
-      sameSite: NODE_ENV === "production" ? "none" : "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-
     res.status(201).json({
       success: true,
       message: "User registered successfully",
-      user: {
-        name: user.name,
-        email: user.email,
-      },
+      token,
+      user,
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
@@ -71,7 +61,7 @@ export const loginUser = async (req, res) => {
         .json({ success: false, message: "Email and password are required" });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return res
         .status(400)
@@ -89,20 +79,11 @@ export const loginUser = async (req, res) => {
       expiresIn: JWT_EXPIRES_IN,
     });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: NODE_ENV === "production",
-      sameSite: NODE_ENV === "production" ? "none" : "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-
     res.status(200).json({
       success: true,
       message: "Login successful",
-      user: {
-        name: user.name,
-        email: user.email,
-      },
+      token,
+      user,
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
@@ -112,7 +93,7 @@ export const loginUser = async (req, res) => {
 //check auth : /api/user/is-auth
 export const checkAuth = async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select("-password");
+    const user = await User.findById(req.userId);
     if (!user) {
       return res
         .status(404)
@@ -128,20 +109,20 @@ export const checkAuth = async (req, res) => {
 };
 
 // Logout user : /api/user/logout
-export const logoutUser = async (req, res) => {
-  try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: NODE_ENV === "production",
-      sameSite: NODE_ENV === "production" ? "none" : "strict",
-      maxAge: 0,
-    });
+// export const logoutUser = async (req, res) => {
+//   try {
+//     res.clearCookie("token", {
+//       httpOnly: true,
+//       secure: NODE_ENV === "production",
+//       sameSite: NODE_ENV === "production" ? "none" : "strict",
+//       maxAge: 0,
+//     });
 
-    return res.status(200).json({
-      success: true,
-      message: "Logout successful",
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-};
+//     return res.status(200).json({
+//       success: true,
+//       message: "Logout successful",
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error", error: error.message });
+//   }
+// };

@@ -1,6 +1,7 @@
 import express from "express";
 import { PORT } from "./config/envConfig.js";
 import cors from "cors";
+import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import userRouter from "./routes/userRoute.js";
@@ -20,7 +21,8 @@ await connectDB();
 // Cloudinary connection
 await connectCloudinary();
 
-const allowOrigins = ["http://localhost:3001", "https://sahbadal.github.io"];
+app.use(helmet());
+const allowOrigins = ["http://localhost:3001"];
 app.use(cors({ origin: allowOrigins, credentials: true }));
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);

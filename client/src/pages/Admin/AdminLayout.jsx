@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Utensils } from 'lucide-react'; // Lucide icon
-import { useAppContext } from '../../context/AppContext'; // context path adjust karna ho to karo
+import { Utensils } from 'lucide-react';
+import { useAppContext } from '../../context/AppContext';
 import { assets } from '../../assets/assets';
 import toast from 'react-hot-toast';
 
@@ -9,18 +9,14 @@ const AdminLayout = () => {
     const [providers, setProviders] = useState([]);
     const [orders, setOrders] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
-    const { navigate, axios } = useAppContext();
+    const { navigate } = useAppContext();
     const admin = { name: "Admin" };
 
     const logout = async () => {
         try {
-            const { data } = await axios.get('/api/admin/logout');
-            if (data.success) {
-                toast.success(data.message);
-                navigate('/');
-            } else {
-                toast.error(data.message);
-            }
+            localStorage.removeItem('adminToken');
+            toast.success(data.message);
+            navigate('/');
         } catch (error) {
             toast.error(error.message);
         }

@@ -1,16 +1,16 @@
-import React from 'react';
+import { useState } from 'react';
 import { useAppContext } from '../context/AppContext.jsx';
 import toast from 'react-hot-toast';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'; // react-icons eye icons
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 const Login = () => {
     const { setShowUserLogin, setUser, axios, navigate } = useAppContext();
 
-    const [state, setState] = React.useState("login");
-    const [name, setName] = React.useState("");
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [state, setState] = useState("login");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSubmitHandler = async (e) => {
         try {
@@ -21,9 +21,10 @@ const Login = () => {
                 password
             });
             if (data.success) {
-                navigate("/");
+                localStorage.setItem('token', data.token)
                 setUser(data.user);
                 setShowUserLogin(false);
+                navigate("/");
             } else {
                 toast.error(data.message);
             }

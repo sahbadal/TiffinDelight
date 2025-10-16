@@ -5,9 +5,8 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
-axios.defaults.withCredentials = true;
 
-console.log("BASE URL:", import.meta.env.VITE_BACKEND_URL);
+
 
 const AppContext = createContext();
 
@@ -26,11 +25,18 @@ export const AppContextProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState({});
     const [searchQuery, setSearchQuery] = useState({});
 
+    const token = localStorage.getItem('token');
+    const providerToken = localStorage.getItem('providerToken');
+    const adminToken = localStorage.getItem('adminToken');
+
+    console.log(providerToken);
+
     //fetch provider status
     const fetchProvider = async () => {
         try {
-            const { data } = await axios.get('/api/provider/is-auth');
-            console.log(data);
+            const { data } = await axios.get('/api/provider/is-auth', {
+                headers: { Authorization: `Bearer ${providerToken}` }
+            });
             if (data.success) {
                 setIsProvider(true);
                 setProvider(data.provider);
@@ -49,7 +55,9 @@ export const AppContextProvider = ({ children }) => {
     // fetch admin status
     const fetchAdmin = async () => {
         try {
-            const { data } = await axios.get('/api/admin/is-auth');
+            const { data } = await axios.get('/api/admin/is-auth', {
+                headers: { Authorization: `Bearer ${adminToken}` }
+            });
             if (data.success) {
                 setIsAdmin(true);
             } else {
@@ -66,7 +74,9 @@ export const AppContextProvider = ({ children }) => {
     //fetch user auth status, user data and cartItems
     const fetchUser = async () => {
         try {
-            const { data } = await axios.get('/api/user/is-auth');
+            const { data } = await axios.get('/api/user/is-auth', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             if (data.success) {
                 setUser(data.user);
                 setCartItems(data.user.cartItems);
@@ -105,7 +115,11 @@ export const AppContextProvider = ({ children }) => {
     useEffect(() => {
         const updateCart = async () => {
             try {
-                const { data } = await axios.post('/api/cart/update', { cartItems });
+                const { data } = await axios.post('/api/cart/update', { cartItems }
+                    , {
+                        headers: { Authorization: `Bearer ${token}` }
+                    },
+                );
                 if (!data.success) {
                     toast.error(data.message);
                 }
@@ -200,6 +214,8 @@ export const AppContextProvider = ({ children }) => {
         setProvider,
         isAdmin,
         setIsAdmin,
+        token,
+        providerToken,
     };
 
     return (

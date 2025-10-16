@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppContext } from '../../context/AppContext.jsx';
 import toast from 'react-hot-toast';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
@@ -6,12 +6,12 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 const ProviderLogin = () => {
     const { setShowUserLogin, setUser, isProvider, setIsProvider, navigate, axios, setProvider } = useAppContext();
 
-    const [state, setState] = React.useState("login");
-    const [name, setName] = React.useState("");
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const [kitchenName, setKitchenName] = React.useState("");
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [state, setState] = useState("login");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [kitchenName, setKitchenName] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSubmitHandler = async (e) => {
         try {
@@ -23,6 +23,7 @@ const ProviderLogin = () => {
                 kitchenName
             });
             if (data.success) {
+                localStorage.setItem('providerToken', data.providerToken)
                 setUser(data.provider);
                 setProvider(data.provider)
                 setIsProvider(true);

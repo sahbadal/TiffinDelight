@@ -6,7 +6,7 @@ import toast from "react-hot-toast"
 const Cart = () => {
     const [showAddress, setShowAddress] = useState(false)
 
-    const { products, currency, cartItems, removeFromCart, getCartCount, updateCartItem, navigate, getCartPrice, axios, user, setCartItems } = useAppContext()
+    const { products, currency, cartItems, removeFromCart, getCartCount, updateCartItem, navigate, getCartPrice, axios, user, setCartItems, token } = useAppContext()
     const [cartArray, setCartArray] = useState([]);
     const [addresses, setAddresses] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
@@ -26,7 +26,9 @@ const Cart = () => {
 
     const getUserAddress = async () => {
         try {
-            const { data } = await axios.get('/api/address/get');
+            const { data } = await axios.get('/api/address/get', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             if (data.success) {
                 setAddresses(data.addresses);
                 if (data.addresses.length > 0) {
@@ -51,6 +53,8 @@ const Cart = () => {
                     userId: user._id,
                     items: cartArray.map(item => ({ product: item._id, quantity: item.quantity })),
                     address: selectedAddress._id,
+                }, {
+                    headers: { Authorization: `Bearer ${token}` }
                 });
                 if (data.success) {
                     toast.success(data.message);
@@ -66,6 +70,8 @@ const Cart = () => {
                     userId: user._id,
                     items: cartArray.map(item => ({ product: item._id, quantity: item.quantity })),
                     address: selectedAddress._id,
+                }, {
+                    headers: { Authorization: `Bearer ${token}` }
                 });
                 if (data.success) {
                     window.location.replace(data.url);

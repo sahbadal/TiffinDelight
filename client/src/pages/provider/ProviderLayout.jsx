@@ -17,17 +17,12 @@ const ProviderLayout = () => {
 
     const logout = async () => {
         try {
-            const { data } = await axios.get('/api/provider/logout');
-            if (data.success) {
-                setUser(null);
-                setIsProvider(false);
-                toast.success(data.message);
-                navigate("/");
-            } else {
-                toast.error(data.message);
-            }
+            localStorage.removeItem('providerToken')
+            setUser(null);
+            setIsProvider(false);
+            toast.success('Logout Successfully');
+            navigate("/");
         } catch (error) {
-            console.log(error.response);
             toast.error(error.message);
         }
     }

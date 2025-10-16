@@ -3,7 +3,13 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/envConfig.js";
 
 const authProvider = async (req, res, next) => {
-  const providerToken = req.cookies.provider_token;
+  const authProviderHeader = req.headers.authorization;
+
+  if (!authProviderHeader || !authProviderHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ success: false, message: "Not Authorized" });
+  }
+
+  const providerToken = authProviderHeader.split(" ")[1];
 
   if (!providerToken) {
     return res.status(401).json({ success: false, message: "Not Authorized" });

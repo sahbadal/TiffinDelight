@@ -5,12 +5,14 @@ import toast from 'react-hot-toast';
 
 const Orders = () => {
 
-    const { currency, axios } = useAppContext();
+    const { currency, axios, providerToken } = useAppContext();
     const [orders, setOrders] = useState([]);
 
     const fetchOrders = async () => {
         try {
-            const { data } = await axios.get('/api/order/provider');
+            const { data } = await axios.get('/api/order/provider', {
+                headers: { Authorization: `Bearer ${providerToken}` }
+            });
             if (data.success) {
                 setOrders(data.orders);
             } else {

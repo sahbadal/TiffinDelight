@@ -1,4 +1,23 @@
+import { useState } from "react"
+import toast from "react-hot-toast"
+
 const NewsLetter = () => {
+    const [email, setEmail] = useState('');
+
+    const validateEmail = (email) => {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if (!email || !validateEmail(email)) {
+            toast.error("Please enter a valid email!");
+            return;
+        }
+        toast.success(`Subscribed successfully`);
+        setEmail('');
+    }
 
     return (
         <div className="flex flex-col items-center justify-center text-center space-y-2 mt-24 pb-14">
@@ -10,10 +29,12 @@ const NewsLetter = () => {
                 <input
                     className="border border-gray-300 rounded-md h-full border-r-0 outline-none w-full rounded-r-none px-3 text-gray-500"
                     type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email id"
                     required
                 />
-                <button type="submit" className="md:px-12 px-8 h-full text-white bg-primary hover:bg- transition-all cursor-pointer rounded-md rounded-l-none">
+                <button onClick={onSubmit} type="submit" className="md:px-12 px-8 h-full text-white bg-primary hover:bg- transition-all cursor-pointer rounded-md rounded-l-none">
                     Subscribe
                 </button>
             </form>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { data, NavLink } from 'react-router-dom'
 import { Utensils } from 'lucide-react'
 import { assets } from '../assets/assets.js'
 import { useAppContext } from '../context/AppContext.jsx'
@@ -7,20 +7,18 @@ import toast from 'react-hot-toast'
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
-    const { user, setUser, setShowUserLogin, navigate, searchQuery, setSearchQuery, getCartCount, axios } = useAppContext();
+    const { user, setUser, setShowUserLogin, navigate, searchQuery, setSearchQuery, getCartCount } = useAppContext();
 
     const logout = async () => {
         try {
-            const { data } = await axios.get('/api/user/logout');
-            if (data.success) {
-                toast.success(data.message);
-                setUser(null);
-                navigate("/");
-            } else {
-                toast.error(data.message);
-            }
+
+            localStorage.removeItem('token');
+            setUser(null);
+            toast.success('Logout Successfully');
+            navigate('/')
+
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.message)
         }
     }
 

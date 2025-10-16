@@ -12,7 +12,8 @@ const AddProducts = () => {
     const [price, setPrice] = useState('');
     const [offerPrice, setOfferPrice] = useState('');
 
-    const { axios } = useAppContext();
+    const { axios, providerToken } = useAppContext();
+    console.log(providerToken)
 
     const onSubmitHandler = async (e) => {
         try {
@@ -30,7 +31,14 @@ const AddProducts = () => {
                 formData.append('images', files[i]);
             }
 
-            const { data } = await axios.post('/api/product/add', formData);
+            const { data } = await axios.post('/api/product/add', formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${providerToken}`,
+                        "Content-Type": "multipart/form-data"
+                    }
+                }
+            );
             if (data.success) {
                 toast.success(data.message);
                 setName('');

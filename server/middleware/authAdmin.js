@@ -1,12 +1,15 @@
 import jwt from "jsonwebtoken";
-import {
-  JWT_SECRET,
-  ADMIN_EMAIL,
-  ADMIN_PASSWORD,
-} from "../config/envConfig.js";
+import { JWT_SECRET, ADMIN_EMAIL } from "../config/envConfig.js";
 
 const authAdmin = async (req, res, next) => {
-  const { adminToken } = req.cookies;
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+  }
+
+  const adminToken = authHeader.split(" ")[1];
+
   if (!adminToken) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
