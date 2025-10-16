@@ -22,7 +22,10 @@ await connectDB();
 await connectCloudinary();
 
 app.use(helmet());
-const allowOrigins = ["http://localhost:3001"];
+const allowOrigins = [
+  "http://localhost:3001",
+  "https://tiffin-delight-ten.vercel.app",
+];
 app.use(cors({ origin: allowOrigins, credentials: true }));
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
