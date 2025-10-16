@@ -15,7 +15,7 @@ const AdminLayout = () => {
     const logout = async () => {
         try {
             localStorage.removeItem('adminToken');
-            toast.success(data.message);
+            toast.success('Logout Successfully');
             navigate('/');
         } catch (error) {
             toast.error(error.message);
