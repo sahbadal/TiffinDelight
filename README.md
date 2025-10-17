@@ -1,14 +1,12 @@
 # 🍱 TiffinDelight
 
 A full-stack Tiffin ordering web app built using the MERN stack.  
-Frontend is hosted on **GitHub Pages**, and the backend is deployed on **Render**.
 
 ---
 
 ## 🌐 Live Demo
 
-- 🔗 Frontend: [https://sahbadal.github.io/TiffinDelight](https://sahbadal.github.io/TiffinDelight)
-- 🔗 Backend API: [https://tiffindelight-backend.onrender.com](https://tiffindelight-backend.onrender.com)
+- 🔗[https://tiffin-delight-ten.vercel.app]
 
 ---
 
@@ -26,7 +24,7 @@ Frontend is hosted on **GitHub Pages**, and the backend is deployed on **Render*
 - MongoDB (with Mongoose)
 - Cloudinary (for image upload)
 - Stripe (for payment integration)
-- CORS + Cookie Parser
+- CORS + JWT 
 
 ---
 
